@@ -59,6 +59,10 @@ evalite('TS Release Notes', {
         <question>
         ${input}
         </question>
+
+        <links>
+        ${links.map((link) => `<link>${link.title}: ${link.url}</link>`).join('\n')}
+        </links>
       `,
     });
 
@@ -67,14 +71,21 @@ evalite('TS Release Notes', {
   scorers: [
     {
       name: 'Includes Markdown Links',
-      scorer: ({ input, output, expected }) => {
-        // TODO: check if the output includes markdown links
+      scorer: ({ output }) => {
+        // check if the output includes markdown links
+        const markdownLinksFound = (
+          output.match(
+            /\[([^\]]+)\]\((https?:\/\/[^\s)]+)\)/g,
+          ) || []
+        ).length;
+        return markdownLinksFound >= 2 ? 1 : 0;
       },
     },
     {
       name: 'Output length',
-      scorer: ({ input, output, expected }) => {
-        // TODO: check if the output is less than 500 characters
+      scorer: ({ output }) => {
+        // check if the output is less than 500 characters
+        return output.length < 500 ? 1 : 0;
       },
     },
   ],

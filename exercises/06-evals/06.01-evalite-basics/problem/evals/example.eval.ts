@@ -1,3 +1,5 @@
+import { google } from '@ai-sdk/google';
+import { generateText } from 'ai';
 import { evalite } from 'evalite';
 
 evalite('Capitals', {
@@ -16,7 +18,18 @@ evalite('Capitals', {
     },
   ],
   task: async (input) => {
-    const capitalResult = TODO; // Implement this!
+    const capitalResult = await generateText({
+      model: google('gemini-2.5-flash'),
+      prompt: `
+        You are a helpful assistant that can answer questions about the capital of countries.
+        <question>
+        ${input}
+        <question>
+
+        Answer the question.
+        Reply only with the capital of the country.
+        `,
+    });
 
     return capitalResult.text;
   },
