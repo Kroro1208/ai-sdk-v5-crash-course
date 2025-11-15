@@ -2,13 +2,15 @@ There are three main types of datasets to consider when working with evals.
 
 ## Dev Dataset
 
-The first is your dev dataset, which contains the evals you run with every local change. Keep this dataset small to ensure your dev evals run quickly.
+- 少数の重要な評価ケースで、ローカル開発時に素早くテストするためのもの。
+  The first is your dev dataset, which contains the evals you run with every local change. Keep this dataset small to ensure your dev evals run quickly.
 
 Your dev setup should focus on the most challenging evals or those you're currently prioritizing. Aim for about 5-10 evals in this dataset.
 
 ## CI Dataset
 
-Next is your CI dataset, which ensures that merged code continues to pass evals. This runs less frequently than the dev setup but still executes with every commit.
+- Devで使った評価や「ゴールデンケース」を含み、コミットごとに品質を担保するためのもの。
+  Next is your CI dataset, which ensures that merged code continues to pass evals. This runs less frequently than the dev setup but still executes with every commit.
 
 This dataset should be more comprehensive but not overwhelming. It shouldn't take more than 15 minutes to run.
 
@@ -16,7 +18,8 @@ Include evals that have been in your dev dataset over the past few weeks, plus s
 
 ## Regression Dataset
 
-Finally, there's the regression dataset. This is your largest dataset, containing all the evals you want to track over time.
+- 大量の評価ケースで、長期的な性能や品質の推移を定期的にチェックするためのもの。
+  Finally, there's the regression dataset. This is your largest dataset, containing all the evals you want to track over time.
 
 This might include 500 to 1,000 evals. Run these on a schedule - perhaps daily or every few days - to provide benchmarks for tracking whether your application is improving over time.
 

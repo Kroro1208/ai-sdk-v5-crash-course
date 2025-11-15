@@ -1,15 +1,21 @@
-// TODO: declare the otelSDK variable using the NodeSDK class
-// from the @opentelemetry/sdk-node package,
-// and pass it the LangfuseExporter instance
-// from the langfuse-vercel package as the traceExporter
-export const otelSDK = TODO;
+import { NodeSDK } from '@opentelemetry/sdk-node';
+import Langfuse from 'langfuse';
+import { LangfuseExporter } from 'langfuse-vercel';
+
+/**
+ * OpenTelemetryは、アプリの中で何が起きたか（どんな処理が実行されたか）を自動で記録するための仕組。
+ * たとえば、どの機能が使われたか、どれくらい時間がかかったかなどを記録できる。
+ * このファイルでは、その記録を外部サービス（Langfuse）に送るための準備と設定している。
+ */
+export const otelSDK = new NodeSDK({
+  traceExporter: new LangfuseExporter(),
+});
 
 otelSDK.start();
 
-// TODO: declare the langfuse variable using the Langfuse class
-// from the langfuse package, and pass it the following arguments:
-// - environment: process.env.NODE_ENV
-// - publicKey: process.env.LANGFUSE_PUBLIC_KEY
-// - secretKey: process.env.LANGFUSE_SECRET_KEY
-// - baseUrl: process.env.LANGFUSE_BASE_URL
-export const langfuse = TODO;
+export const langfuse = new Langfuse({
+  environment: process.env.NODE_ENV,
+  publicKey: process.env.LANGFUSE_PUBLIC_KEY,
+  secretKey: process.env.LANGFUSE_SECRET_KEY,
+  baseUrl: process.env.LANGFUSE_BASE_URL,
+});

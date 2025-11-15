@@ -1,5 +1,5 @@
-import type { UIDataTypes, UIMessagePart, UITools } from 'ai';
 import React from 'react';
+import type { UIDataTypes, UIMessagePart, UITools } from 'ai';
 import ReactMarkdown from 'react-markdown';
 
 export const Wrapper = (props: {
