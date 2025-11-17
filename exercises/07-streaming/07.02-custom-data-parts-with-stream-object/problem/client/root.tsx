@@ -10,11 +10,12 @@ const App = () => {
 
   const [input, setInput] = useState(``);
 
-  // TODO: Update this to handle the new
-  // data-suggestions part
+  // data-suggestions partから最新の提案を取得
   const latestSuggestion = messages[
     messages.length - 1
-  ]?.parts.find((part) => part.type === 'data-suggestion')?.data;
+  ]?.parts.find(
+    (part) => part.type === 'data-suggestions',
+  )?.data;
 
   return (
     <Wrapper>
@@ -26,11 +27,12 @@ const App = () => {
         />
       ))}
       <ChatInput
-        // TODO: Update this to handle the new
-        // data-suggestions part
-        suggestion={
+        suggestions={
           messages.length === 0
-            ? 'What is the capital of France?'
+            ? [
+                'What is the capital of France?',
+                'What is the capital of Germany?',
+              ]
             : latestSuggestion
         }
         input={input}

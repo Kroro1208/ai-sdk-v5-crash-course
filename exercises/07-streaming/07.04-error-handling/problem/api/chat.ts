@@ -16,15 +16,13 @@ export const POST = async (req: Request): Promise<Response> => {
       });
     },
     onError(error) {
-      // TODO: Check if the error is a RetryError using:
+      // Check if the error is a RetryError using:
       // RetryError.isInstance(error)
-      if (TODO) {
-        // TODO: If it is, return a message that tells the user to try again
-        return TODO;
+      if (RetryError.isInstance(error)) {
+        return `Could not complete request. Please try again.`;
       }
 
-      // TODO: Return a default message if the error is not a RetryError
-      return TODO;
+      return `An unexpected error occurred. Please try again later.`;
     },
   });
 

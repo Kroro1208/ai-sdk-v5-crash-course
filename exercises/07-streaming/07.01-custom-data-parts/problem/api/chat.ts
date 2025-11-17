@@ -11,8 +11,8 @@ import {
 export type MyMessage = UIMessage<
   never,
   {
-    // TODO: Define the type for the suggestion data part
-    TODO: TODO;
+    // AIがユーザーに次に質問すべき内容を提案するためのデータ
+    suggestion: string;
   }
 >;
 
@@ -20,6 +20,8 @@ export const POST = async (req: Request): Promise<Response> => {
   const body = await req.json();
 
   const messages: UIMessage[] = body.messages;
+
+  console.log('Received messages:', messages);
 
   const modelMessages: ModelMessage[] =
     convertToModelMessages(messages);
@@ -45,6 +47,7 @@ export const POST = async (req: Request): Promise<Response> => {
           },
           {
             role: 'user',
+            // AIに次に尋ねるべき質問を提案するよう促す
             content:
               'What question should I ask next? Return only the question text.',
           },
@@ -56,15 +59,16 @@ export const POST = async (req: Request): Promise<Response> => {
 
       // NOTE: Create a variable to store the full suggestion,
       // since we need to store the full suggestion each time
-      let fullSuggestion = TODO;
+      let fullSuggestion = '';
 
       for await (const chunk of followupSuggestionsResult.textStream) {
-        // TODO: Append the chunk to the full suggestion
-        fullSuggestion += TODO;
-
-        // TODO: Call writer.write and write the data part
-        // to the stream
-        TODO;
+        // Append the chunk to the full suggestion
+        fullSuggestion += chunk;
+        writer.write({
+          id: dataPartId,
+          type: 'data-suggestion',
+          data: fullSuggestion,
+        });
       }
     },
   });

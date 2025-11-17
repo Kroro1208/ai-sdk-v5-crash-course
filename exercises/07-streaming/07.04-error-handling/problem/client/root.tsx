@@ -6,8 +6,7 @@ import { ChatInput, Message, Wrapper } from './components.tsx';
 import './tailwind.css';
 
 const App = () => {
-  // TODO: Destructure the error property returned from the useChat hook
-  const { messages, sendMessage } = useChat({});
+  const { messages, sendMessage, error } = useChat({});
 
   const [input, setInput] = useState(
     `What's the capital of France?`,
@@ -22,8 +21,12 @@ const App = () => {
           parts={message.parts}
         />
       ))}
-      {/* TODO: Show an error message if the error exists */}
-      {TODO}
+      {error && (
+        <div className="flex items-center gap-2 p-3 mb-4 text-red-300 bg-red-900/20 border border-red-500/30 rounded-lg">
+          <AlertCircle className="size-5 flex-shrink-0" />
+          <span>{error.message}</span>
+        </div>
+      )}
       <ChatInput
         input={input}
         onChange={(e) => setInput(e.target.value)}
