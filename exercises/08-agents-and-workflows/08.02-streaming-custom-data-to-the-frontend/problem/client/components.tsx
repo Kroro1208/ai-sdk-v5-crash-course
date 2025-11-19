@@ -1,6 +1,7 @@
 import type { UIMessage } from 'ai';
 import React from 'react';
 import ReactMarkdown from 'react-markdown';
+import type { MyMessage } from '../api/chat.ts';
 
 export const Wrapper = (props: {
   children: React.ReactNode;
@@ -19,13 +20,20 @@ export const Message = ({
   parts,
 }: {
   role: string;
-  parts: UIMessage['parts'];
+  parts: MyMessage['parts'];
 }) => (
   <div className="my-4">
     {parts.map((part) => {
-      // TODO: use this component to handle the custom data parts
-      // you have created in the api/chat.ts file
-      TODO;
+      if (part.type === 'data-slack-message') {
+        return (
+          <div key={part.id} className="mb-4">
+            <h2 className="text-gray-300 text-sm mb-1">
+              First Draft
+            </h2>
+            <p className="text-gray-400 text-xs">{part.data}</p>
+          </div>
+        );
+      }
 
       if (part.type === 'text') {
         return (
